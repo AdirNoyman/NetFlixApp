@@ -1,4 +1,6 @@
 import { User } from '../models/User.model.js';
+import bcryptjs from 'bcryptjs';
+import { generateTokenAndSetCookie } from '../utils/generateToken.js';
 
 export const signup = async (req, res) => {
   try {
@@ -24,12 +26,10 @@ export const signup = async (req, res) => {
 
     // Check if password is at least 5 characters
     if (password.length < 5) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: 'Password must be at least 5 characters 🤨',
-        });
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 5 characters 🤨',
+      });
     }
 
     // Check is user already exists
@@ -50,6 +50,10 @@ export const signup = async (req, res) => {
         .json({ success: false, message: 'Username already exists 🤨' });
     }
 
+    // Hash password
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
+
     const PROFILE_AVATRS = [
       '/profile_img_1.jpg',
       '/profile_img_2.jpg',
@@ -61,14 +65,22 @@ export const signup = async (req, res) => {
       PROFILE_AVATRS[Math.floor(Math.random() * PROFILE_AVATRS.length)];
 
     // Create new user
-    const newUser = new User({ email, password, username, image });
-    // Save user to database
+    const newUser = new User({
+      email,
+      password: hashedPassword,
+      username,
+      image,
+    });
+
+    // Generate and send jwt token to the user and Save user to database
+    generateTokenAndSetCookie(newUser._id, res);
+
     await newUser.save();
 
     //TODO: Remove password from response
     res
       .status(201)
-      .json({ success: true, user: { ...newUser._doc, password: '********' } });
+      .json({ success: true, user: { ...newUser._doc, password: '' } });
   } catch (error) {
     console.log('Error on signup', error.message);
     res
