@@ -75,6 +75,8 @@ export const signup = async (req, res) => {
     // Generate and send jwt token to the user and Save user to database
     generateTokenAndSetCookie(newUser._id, res);
 
+    console.log({ ...newUser._doc });
+
     await newUser.save();
 
     //TODO: Remove password from response
@@ -90,9 +92,55 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  res.send('login route');
+  try {
+    // Get email and password from request body
+    const { email, password } = req.body;
+    // Check if email and password are provided
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Please fill all fields 🤨' });
+    }
+    // Check if user exists
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Invalid credentials 🤨' });
+    }
+
+    // Check if password is correct
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Invalid credentials 🤨' });
+    }
+
+    // Password is correct -> generate and send jwt token to the user
+    generateTokenAndSetCookie(user._id, res);
+
+    res
+      .status(200)
+      .json({ success: true, user: { ...user._doc, password: '' } });
+  } catch (error) {
+    console.log('Error on login', error.message);
+    res
+      .status(500)
+      .json({ success: false, message: 'Internal server error 🤨' });
+  }
 };
 
 export const logout = async (req, res) => {
-  res.send('logout route');
+  try {
+    res.clearCookie('jwt-netflix');
+    res.status(200).json({ success: true, message: 'Logged out successfully' });
+  } catch (error) {
+    console.log('Error on logout', error.message);
+    res
+      .status(500)
+      .json({ success: false, message: 'Internal server error 🤨' });
+  }
 };
