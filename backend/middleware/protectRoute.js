@@ -32,8 +32,7 @@ export const protectRoute = async (req, res, next) => {
         .json({ success: false, message: 'Sorry, you are not authorized 🤨' });
     }
 
-    // Everything is fine, forward the request to the next middleware or route, but first make sure the user is authenticated
-
+    // Save the user to request object
     req.user = user;
 
     next();

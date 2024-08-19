@@ -2,6 +2,7 @@ import express from 'express';
 import authRoutes from './routes/auth.routes.js';
 import moviesRoutes from './routes/movies.routes.js';
 import tvRoutes from './routes/tv.routes.js';
+import searchRoutes from './routes/search.routes.js';
 import { ENV_VARS } from './config/envVars.js';
 import { connectDB } from './data/db.js';
 import cookieParser from 'cookie-parser';
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/movies", protectRoute, moviesRoutes);
 app.use("/api/v1/tv", protectRoute, tvRoutes);
+app.use("/api/v1/search", protectRoute, searchRoutes);
 
 app.get("/", (req,res) => {
 
