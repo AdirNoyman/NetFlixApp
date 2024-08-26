@@ -4,9 +4,9 @@ import { searchMovie,searchPerson,searchTv } from "../controllers/search.control
 
 const router = express.Router();
 
-router.get('/person/:query', searchPerson);
-router.get('/person/:query', searchMovie);
-router.get("/tv/:query", searchTv);
+router.get('/person', searchPerson);
+router.get('/movie', searchMovie);
+router.get("/tvshow", searchTv);
 
 
 export default router;
