@@ -47,7 +47,7 @@ const AuthScreen = () => {
         </form>        
       </div>
       {/* page body seperator */}
-      <div className="h-2 w-full bg-[#232323]" aria-hidden="true">
+      <div className="h-2 w-full bg-[#232323]" aria-hidden="true"></div>
         {/* 1st section */}
         <div className="py-10 bg-black text-white">
           <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2">
@@ -67,8 +67,43 @@ const AuthScreen = () => {
             </div> 
           </div>
         </div>
-      </div>
-
+      
+      
+      {/* page body seperator */}
+      <div className="h-2 w-full bg-[#232323]" aria-hidden="true"></div>
+        {/* 2nd section */}
+        
+        <div className="py-10 bg-black text-white">
+          <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col-reverse px-4 md:px-2">
+            {/* left column */}
+            <div className="flex-1 relative">
+              <div className='relative'>
+                <img src="/images/stranger-things-lg.png" alt="Stranger Things image" className='mt-4'/>
+                <div className="flex items-center absolute bottom-5 left-1/2 -translate-x-1/2 bg-black w-3/4 lg:w-1/2 h-24 border border-slate-500 rounded-md px-2">
+                <img src="/images/stranger-things-sm.png" alt="Strange Things image" className='h-full mr-2'/>
+                <div className="flex justify-between items-center w-full">
+                  <div className="flex flex-col gap-0">
+                    <span className='text-md lg:text-lg font-bold'>Stranger Things</span>
+                    <span className='text-sm text-blue-500'>Downloading...</span>
+                  </div>
+                  <img src="/images/download-icon.gif" alt="downloading gif" className='h-12'/>
+                </div>
+                </div>
+              </div>
+            </div>
+           
+            {/* right column */}
+            <div className='flex-1 md:text-left text-center'>
+						<h2 className='text-4xl md:text-5xl font-extrabold mb-4 text-balance'>
+							Download your shows to watch offline
+						</h2>
+						<p className='text-lg md:text-xl'>
+							Save your favorites easily and always have something to watch.
+						</p>
+					</div>
+          </div>
+        </div>
+      
     </div>
   );
 };
