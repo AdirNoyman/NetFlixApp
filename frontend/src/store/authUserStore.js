@@ -6,17 +6,18 @@ export const useAuthStore = create((set) => {
   return {
     user: null,
     isSigningUpInProgeress: false,
+    isCheckingUserAuth: true,
     signup: async (credentials) => {
       set({ isSigningUpInProgeress: true });
-
       try {
+        // '/api' will be replaced by the base url: 'http://localhost:3000'
         const response = await axios.post('/api/v1/auth/signup', credentials);
         // Store in session state, the user object that was returned from the server
         set({ user: response.data.user });
 
         set({ isSigningUpInProgeress: false });
 
-        toast.success("Account created successfully 😎🤘")
+        toast.success('Account created successfully 😎🤘');
       } catch (error) {
         console.error('Error signing up: ', error);
         toast.error(
@@ -28,6 +29,17 @@ export const useAuthStore = create((set) => {
     },
     login: async () => {},
     logout: async () => {},
-    authCheck: async () => {},
+    authCheck: async () => {
+      set({ isCheckingUserAuth: true });
+
+      try {
+        const response = await axios.get('/api/v1/auth/authcheck');
+
+        set({ user: response.data.user, isCheckingUserAuth: false });
+      } catch (error) {
+        set({ isCheckingUserAuth: false, user: null });
+        console.log("Error is checking user auth", error);
+      }
+    },
   };
 });

@@ -16,7 +16,7 @@ const SignUpPage = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
 
-    console.log(email, username, password);
+   signup({ email, username, password });
   };
 
   return (
