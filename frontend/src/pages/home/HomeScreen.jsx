@@ -1,7 +1,13 @@
-import React from 'react';
+import { useAuthStore } from '../../store/authUserStore.js';
 
 const HomeScreen = () => {
-  return <div>HomeScreen</div>;
+  const { logout } = useAuthStore();
+  return (
+    <>
+      <h1>HomeScreen</h1>
+      <button onClick={logout}>logout</button>
+    </>
+  );
 };
 
 export default HomeScreen;
