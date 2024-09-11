@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authUserStore';
+import toast from 'react-hot-toast';
 
 const SignUpPage = () => {
   const { searchParams } = new URL(document.location);
@@ -15,6 +16,11 @@ const SignUpPage = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    if (!email || !username || !password) {
+      toast.error('Please fill all fields 🤨');
+      return;
+    }
 
    signup({ email, username, password });
   };

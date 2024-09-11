@@ -1,14 +1,25 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../store/authUserStore';
+import toast from 'react-hot-toast';
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+   // Get data or methods from the global state/store
+   const {login} = useAuthStore();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    if (!email || !password) {
+      toast.error('Please fill all fields 🤨');
+      return;
+    }   
+
+    login({email, password});
   };
 
   return (

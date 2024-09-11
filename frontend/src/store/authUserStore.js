@@ -7,7 +7,10 @@ export const useAuthStore = create((set) => {
     user: null,
     isSigningUpInProgeress: false,
     isCheckingUserAuth: true,
+    isLoggingIn: false,
     isLoggingOut: false,
+
+    // SIGNUP ////////////////////////////////////////////////
     signup: async (credentials) => {
       set({ isSigningUpInProgeress: true });
       try {
@@ -28,7 +31,27 @@ export const useAuthStore = create((set) => {
         set({ isSigningUpInProgeress: false, user: null });
       }
     },
-    login: async () => {},
+
+    // LOGIN ////////////////////////////////////////////////
+    login: async (credentials) => {
+      set({ isLoggingIn: true });
+
+      try {
+        // '/api' will be replaced by the base url: 'http://localhost:3000'
+        const response = await axios.post('/api/v1/auth/login', credentials);
+        set({ user: response.data.user, isLoggingIn: false });
+        toast.success('Logged In successfully 😎🤘');
+      } catch (error) {
+        set({ isLoggingIn: false, user: null });
+        console.error('Error logging in: ', error);
+        toast.error(
+          error.response.data.message ||
+            'Error logging in 😫. Please try again later.'
+        );
+      }
+    },
+
+    // LOGOUT ////////////////////////////////////////////////
     logout: async () => {
       set({ isLoggingOut: true });
 
@@ -45,6 +68,7 @@ export const useAuthStore = create((set) => {
         );
       }
     },
+    // AUTH CHECK ////////////////////////////////////////////////
     authCheck: async () => {
       set({ isCheckingUserAuth: true });
 
@@ -54,7 +78,7 @@ export const useAuthStore = create((set) => {
         set({ user: response.data.user, isCheckingUserAuth: false });
       } catch (error) {
         set({ isCheckingUserAuth: false, user: null });
-        console.log("Error is checking user auth", error);
+        console.log('Error is checking user auth', error);
       }
     },
   };
