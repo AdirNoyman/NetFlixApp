@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import {LogOut, Menu, Search} from 'lucide-react';
+import {useAuthStore} from '../src/store/authUserStore.js';
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuthStore();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -16,6 +19,7 @@ const NavBar = () => {
             className="w-32 sm:w-40"
           />
         </Link>
+        
         {/* Desktop navbar items */}
         <div className="hidden sm:flex gap-2 items-center">
           <Link to="/" className="hover:underline">
@@ -27,6 +31,21 @@ const NavBar = () => {
           <Link to="/history" className="hover:underline">
             Search History
           </Link>
+        </div>
+        </div>
+
+      <div className="flex gap-2 items-center z-50">
+        <Link to={"/search"}>
+        <Search className="size-6 cursor-pointer" />
+        </Link>
+        
+        <img src={`images/${user.image}`} alt="Avatar" className='h-2 rounded cursor-pointer'/>
+        
+        <LogOut className="size-6 cursor-pointer" onClick={logout} />
+        <div className="sm:hidden">
+          <Menu
+            className="size-6 cursor-pointer"
+            onClick={toggleMobileMenu} />
         </div>
       </div>
       {/* Mobile navbar items */}

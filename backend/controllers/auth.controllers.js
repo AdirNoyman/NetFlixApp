@@ -55,10 +55,10 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     const PROFILE_AVATRS = [
-      '/profile_img_1.jpg',
-      '/profile_img_2.jpg',
-      '/profile_img_3.jpg',
-      '/profile_img_4.jpg',
+      '/avatar_img_1.png',
+      '/avatar_img_2.png',
+      '/avatar_img_3.png',
+      '/avatar_img_4.png',
     ];
 
     const image =
