@@ -3,7 +3,7 @@ import NavBar from '../../../components/NavBar.jsx';
 const HomeScreen = () => {
   return (
     <>
-      <div className="relative h-screen text-white bg-black">
+      <div className="h-screen text-white bg-black relative">
         <NavBar />
       </div>
     </>

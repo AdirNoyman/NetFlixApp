@@ -30,15 +30,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/signup"
-          element={!user ? <SignUpPage /> : <Navigate to={'/'} />}
-        />
-        <Route
-          path="/login"
-          element={!user ? <LoginPage /> : <Navigate to={'/'} />}
-        />
+      <Route path='/' element={<HomePage />} />
+				<Route path='/login' element={!user ? <LoginPage /> : <Navigate to={"/"} />} />
+				<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to={"/"} />} />
+				
       </Routes>
       <Footer />
       <Toaster />

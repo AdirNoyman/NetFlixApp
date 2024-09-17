@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import {LogOut, Menu, Search} from 'lucide-react';
-import {useAuthStore} from '../src/store/authUserStore.js';
+import { LogOut, Menu, Search } from 'lucide-react';
+import { useAuthStore } from '../src/store/authUserStore.js';
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -16,12 +16,12 @@ const NavBar = () => {
           <img
             src="/images/netflix-logo.png"
             alt="Netflix Logo"
-            className="w-32 sm:w-40"
+            className="w-32 sm:w-40 mr-2"
           />
         </Link>
-        
+
         {/* Desktop navbar items */}
-        <div className="hidden sm:flex gap-2 items-center">
+        <div className="hidden sm:flex gap-4 items-center">
           <Link to="/" className="hover:underline">
             Movies
           </Link>
@@ -32,20 +32,22 @@ const NavBar = () => {
             Search History
           </Link>
         </div>
-        </div>
+      </div>
 
       <div className="flex gap-2 items-center z-50">
-        <Link to={"/search"}>
-        <Search className="size-6 cursor-pointer" />
+        <Link to={'/search'}>
+          <Search className="size-6 cursor-pointer" />
         </Link>
-        
-        <img src={`images/${user.image}`} alt="Avatar" className='h-2 rounded cursor-pointer'/>
-        
+
+        <img
+          src={`images/${user.image}`}
+          alt="Avatar"
+          className="h-4 rounded cursor-pointer"
+        />
+
         <LogOut className="size-6 cursor-pointer" onClick={logout} />
         <div className="sm:hidden">
-          <Menu
-            className="size-6 cursor-pointer"
-            onClick={toggleMobileMenu} />
+          <Menu className="size-6 cursor-pointer" onClick={toggleMobileMenu} />
         </div>
       </div>
       {/* Mobile navbar items */}
